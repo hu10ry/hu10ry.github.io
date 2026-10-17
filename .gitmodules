@@ -4,3 +4,6 @@
 [submodule "nzp"]
 	path = nzp
 	url = https://github.com/nzp-team/nzp-team.github.io
+[submodule "ac-gamecube"]
+	path = ac-gamecube
+	url = https://github.com/web-ports/ac-gamecube.git
