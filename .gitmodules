@@ -7,3 +7,6 @@
 [submodule "ac-gamecube"]
 	path = ac-gamecube
 	url = https://github.com/web-ports/ac-gamecube.git
+[submodule "angrybirds2"]
+	path = angrybirds2
+	url = https://github.com/NaoTomori1/AngryBirds2.git
