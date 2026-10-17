@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Angry Birds 2",
+    "url": "./angrybirds2/",
+    "note": "Ported by Reeyuki"
+  },
+  {
+    "name": "Celeste",
+    "url": "./celeste/",
+    "note": "Ported by mercury workshop"
+  },
+  {
+    "name": "Animal Crossing (Dobutsu no Mori+)",
+    "url": "./ac-gamecube/",
+    "note": "Ported by genizy (?)"
+  },
+  {
+    "name": "Nazi Zombies Portable",
+    "url": "./nzp/",
+    "note": "Created by the amazing NZP team"
+  }
+]

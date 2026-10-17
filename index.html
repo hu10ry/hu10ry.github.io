@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>Webports</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Webports home">webports<span>.</span></a>
+    <nav class="actions" aria-label="Save management">
+      <button id="choose-directory">Choose directory</button>
+      <button id="export-all" disabled>Export saves</button>
+      <button id="import-all" disabled>Restore saves</button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <section class="status-row" aria-live="polite">
+      <span id="directory-status">No save directory selected</span>
+      <button id="reconnect-directory" class="text-button" disabled>Reconnect</button>
+    </section>
+
+    <section class="game-section">
+      <div class="section-title">
+        <h1>Games</h1>
+        <span id="game-count" class="muted"></span>
+      </div>
+      <ul id="game-list" class="game-list"></ul>
+    </section>
+
+    <footer>
+      <span>Local save management · No server uploads</span>
+      <span id="adapter-count">Loading adapters…</span>
+    </footer>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
