@@ -1,5 +1,5 @@
 [submodule "celeste"]
-	path = celeste-2
+	path = celeste
 	url = https://github.com/CoolElectronics/celeste-wasm.git
 [submodule "nzp"]
 	path = nzp
