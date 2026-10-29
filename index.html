@@ -4,16 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111111">
-  <title></title>
+  <title>hu10ry.github.io</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <header class="topbar">
-    <nav class="actions" aria-label="Save management">
-      <button id="choose-directory">Choose directory</button>
-      <button id="export-all" disabled>Export saves</button>
-      <button id="import-all" disabled>Restore saves</button>
-    </nav>
   </header>
 
   <main class="content">
@@ -28,10 +23,15 @@
         <span id="game-count" class="muted"></span>
       </div>
       <ul id="game-list" class="game-list"></ul>
+    <br>
+    <nav class="actions" aria-label="Save management">
+      <button id="choose-directory">Choose directory</button>
+      <button id="export-all" disabled>Export saves</button>
+      <button id="import-all" disabled>Restore saves</button>
+    </nav>
     </section>
 
     <footer>
-      <span>Local save management · No server uploads</span>
       <span id="adapter-count">Loading adapters…</span>
     </footer>
   </main>
