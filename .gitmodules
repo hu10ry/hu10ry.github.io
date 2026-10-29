@@ -1,6 +1,3 @@
-[submodule "celeste"]
-	path = celeste
-	url = https://github.com/hu10ry/celeste-wasm.git
 [submodule "nzp"]
 	path = nzp
 	url = https://github.com/nzp-team/nzp-team.github.io
