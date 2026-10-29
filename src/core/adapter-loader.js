@@ -3,8 +3,9 @@
 
 import celeste from "../adapters/celeste.js";
 import acGamecube from "../adapters/ac-gamecube.js";
+import angryBirds2 from "../adapters/angrybirds2.js";
 
-const adapters = [celeste, acGamecube];
+const adapters = [celeste, acGamecube, angryBirds2];
 
 export async function discoverAdapters() {
   const ids = new Set();

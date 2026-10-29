@@ -1,7 +1,10 @@
 const DATABASE_NAME = "/libsdl";
 const DATABASE_VERSION = 21;
 const STORE_NAME = "FILE_DATA";
-const SAVE_PATHS = ["Saves/0.celeste", "Saves/settings.celeste"];
+const SAVE_PATHS = [
+  "Saves/0.celeste", 
+  "Saves/settings.celeste"
+];
 const DIRECTORY_MODE = 16877;
 const FILE_MODE = 33206;
 

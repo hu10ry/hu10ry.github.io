@@ -53,6 +53,7 @@ export class DirectorySync {
           adapterVersion: adapter.version ?? 1,
           ...(manifestFiles.length === 1
             ? {
+                path: manifestFiles[0].path,
                 file: manifestFiles[0].file,
                 contentType: manifestFiles[0].contentType,
                 byteLength: manifestFiles[0].byteLength
@@ -98,7 +99,7 @@ export class DirectorySync {
         const manifestFiles = Array.isArray(entry.files)
           ? entry.files
           : typeof entry.file === "string"
-            ? [{ file: entry.file, fileName: entry.fileName }]
+            ? [{ file: entry.file, fileName: entry.fileName, path: entry.path }]
             : null;
         if (!manifestFiles || manifestFiles.length === 0) throw new Error("Invalid manifest entry.");
 
