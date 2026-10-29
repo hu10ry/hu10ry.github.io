@@ -1,12 +1,12 @@
 [submodule "celeste"]
 	path = celeste
-	url = https://github.com/MercuryWorkshop/celeste-wasm.git
+	url = https://github.com/hu10ry/celeste-wasm.git
 [submodule "nzp"]
 	path = nzp
 	url = https://github.com/nzp-team/nzp-team.github.io
 [submodule "ac-gamecube"]
 	path = ac-gamecube
-	url = https://github.com/web-ports/ac-gamecube.git
+	url = https://github.com/hu10ry/ac-gamecube.git
 [submodule "angrybirds2"]
 	path = angrybirds2
-	url = https://github.com/NaoTomori1/AngryBirds2.git
+	url = https://github.com/hu10ry/AngryBirds2.git
