@@ -7,3 +7,6 @@
 [submodule "angrybirds2"]
 	path = angrybirds2
 	url = https://github.com/hu10ry/AngryBirds2.git
+[submodule "celeste"]
+	path = celeste
+	url = https://github.com/hu10ry/celeste-wasm.git
