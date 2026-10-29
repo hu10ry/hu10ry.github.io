@@ -1,17 +1,10 @@
-// Register adapters here. Each game adapter is a separate file in src/adapters/.
-// Keep adapter IDs stable so old backup folders continue to match.
+// Register one adapter per game. Keep IDs and legacy IDs stable so old backups
+// continue to match after adapters are consolidated.
 
-import celeste from "../adapters/celeste.js"
-import celeste_config from "../adapters/celeste-config.js"
-import acGamecubeA from "../adapters/ac-gamecube-a.js";
-import acGamecubeB from "../adapters/ac-gamecube-b.js"
+import celeste from "../adapters/celeste.js";
+import acGamecube from "../adapters/ac-gamecube.js";
 
-const adapters = [
-  celeste,
-  celeste_config,
-  acGamecubeA,
-  acGamecubeB
-];
+const adapters = [celeste, acGamecube];
 
 export async function discoverAdapters() {
   const ids = new Set();
@@ -26,6 +19,13 @@ export async function discoverAdapters() {
     }
     if (ids.has(adapter.id)) throw new Error(`Duplicate adapter id: ${adapter.id}`);
     ids.add(adapter.id);
+    for (const legacyId of adapter.legacyIds || []) {
+      if (typeof legacyId !== "string" || !/^[a-z0-9][a-z0-9-_]*$/.test(legacyId)) {
+        throw new Error(`Adapter ${adapter.id} has an invalid legacy id.`);
+      }
+      if (ids.has(legacyId)) throw new Error(`Duplicate adapter id: ${legacyId}`);
+      ids.add(legacyId);
+    }
   }
   return adapters;
 }

@@ -1,31 +1,47 @@
 const DATABASE_NAME = "/libsdl";
 const DATABASE_VERSION = 21;
 const STORE_NAME = "FILE_DATA";
-const SAVE_PATH = "/libsdl/Celeste/Saves/0.celeste";
+const SAVE_PATHS = ["Saves/0.celeste", "Saves/settings.celeste"];
 const DIRECTORY_MODE = 16877;
 const FILE_MODE = 33206;
 
 export default {
   id: "celeste",
   name: "Celeste",
-  description: "Celeste save data",
+  legacyIds: ["celeste_config"],
+  description: "Celeste save and config data",
   version: 1,
-  fileName: "0.celeste",
 
   async exportSave() {
     const db = await openSaveDatabase();
     try {
-      const entry = await readEntry(db, SAVE_PATH);
-      return entry?.contents ? new Uint8Array(entry.contents) : null;
+      const files = [];
+      for (const path of SAVE_PATHS) {
+        const entry = await readEntry(db, `/libsdl/Celeste/${path}`);
+        if (entry?.contents != null) {
+          files.push({
+            path,
+            data: new Uint8Array(entry.contents)
+          });
+        }
+      }
+      return files.length > 0 ? files : null;
     } finally {
       db.close();
     }
   },
 
-  async importSave(bytes) {
+  async importSave(files, { sourceAdapterId } = {}) {
     const db = await openSaveDatabase();
     try {
-      await writeSave(db, bytes);
+      const filesToWrite = files.map((file) => {
+        const path = sourceAdapterId === "celeste_config"
+          ? "Saves/settings.celeste"
+          : file.path;
+        if (!SAVE_PATHS.includes(path)) throw new Error(`Unknown Celeste save file: ${path}`);
+        return { path: `/libsdl/Celeste/${path}`, data: file.data };
+      });
+      await writeSaveFiles(db, filesToWrite);
     } finally {
       db.close();
     }
@@ -67,7 +83,7 @@ function readEntry(db, path) {
   });
 }
 
-function writeSave(db, bytes) {
+function writeSaveFiles(db, files) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(STORE_NAME, "readwrite");
     const store = transaction.objectStore(STORE_NAME);
@@ -75,11 +91,13 @@ function writeSave(db, bytes) {
 
     store.put({ timestamp, mode: DIRECTORY_MODE }, "/libsdl/Celeste");
     store.put({ timestamp, mode: DIRECTORY_MODE }, "/libsdl/Celeste/Saves");
-    store.put({
-      timestamp,
-      mode: FILE_MODE,
-      contents: new Uint8Array(bytes)
-    }, SAVE_PATH);
+    for (const file of files) {
+      store.put({
+        timestamp,
+        mode: FILE_MODE,
+        contents: new Uint8Array(file.data)
+      }, file.path);
+    }
 
     transaction.oncomplete = () => resolve();
     transaction.onerror = () => reject(transaction.error);

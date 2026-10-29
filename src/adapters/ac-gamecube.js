@@ -1,36 +1,64 @@
 const DATABASE_NAME = "/save";
 const DATABASE_VERSION = 21;
 const STORE_NAME = "FILE_DATA";
-const SAVE_PATH = "/save/card_a/DobutsunomoriP_MURA.gci";
+const SAVE_PATHS = [
+  "card_a/DobutsunomoriP_MURA.gci",
+  "card_b/DobutsunomoriP_MURA.gci"
+];
 const DIRECTORY_MODE = 16877;
 const FILE_MODE = 33206;
 
 export default {
-  id: "ac-gamecube-a",
-  name: "Animal Crossing Save slot A",
-  description: "Animal Crossing Slot A save data",
+  id: "ac-gamecube",
+  legacyIds: ["ac-gamecube-a", "ac-gamecube-b"],
+  name: "Animal Crossing (Dobutsu no Mori+)",
+  description: "Animal Crossing memory card save slots A and B",
   version: 1,
-  fileName: "DobutsunomoriP_MURA.gci",
 
   async exportSave() {
     const db = await openSaveDatabase();
     try {
-      const entry = await readEntry(db, SAVE_PATH);
-      return entry?.contents ? new Uint8Array(entry.contents) : null;
+      const files = [];
+      for (const path of SAVE_PATHS) {
+        const entry = await readEntry(db, `/save/${path}`);
+        if (entry?.contents != null) {
+          files.push({
+            path,
+            data: new Uint8Array(entry.contents)
+          });
+        }
+      }
+      return files.length ? files : null;
     } finally {
       db.close();
     }
   },
 
-  async importSave(bytes) {
+  async importSave(files, { sourceAdapterId } = {}) {
     const db = await openSaveDatabase();
     try {
-      await writeSave(db, bytes);
+      const selectedFiles = files.map((file) => {
+        const path = sourceAdapterId === "ac-gamecube-a"
+          ? SAVE_PATHS[0]
+          : sourceAdapterId === "ac-gamecube-b"
+            ? SAVE_PATHS[1]
+            : legacySavePath(file);
+        if (!SAVE_PATHS.includes(path)) throw new Error(`Unknown Animal Crossing save path: ${path}`);
+        return { path: `/save/${path}`, bytes: file.data };
+      });
+      await writeFiles(db, selectedFiles);
     } finally {
       db.close();
     }
   }
 };
+
+function legacySavePath(file) {
+  if (file.path === "slot-a" || file.key === "slot-a") return SAVE_PATHS[0];
+  if (file.path === "slot-b" || file.key === "slot-b") return SAVE_PATHS[1];
+  if (file.path) return file.path;
+  throw new Error("Animal Crossing save entry is missing its path.");
+}
 
 function openSaveDatabase() {
   return new Promise((resolve, reject) => {
@@ -67,18 +95,21 @@ function readEntry(db, path) {
   });
 }
 
-function writeSave(db, bytes) {
+function writeFiles(db, files) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(STORE_NAME, "readwrite");
     const store = transaction.objectStore(STORE_NAME);
     const timestamp = new Date();
 
     store.put({ timestamp, mode: DIRECTORY_MODE }, "/save/card_a");
-    store.put({
-      timestamp,
-      mode: FILE_MODE,
-      contents: new Uint8Array(bytes)
-    }, SAVE_PATH);
+    store.put({ timestamp, mode: DIRECTORY_MODE }, "/save/card_b");
+    for (const { path, bytes } of files) {
+      store.put({
+        timestamp,
+        mode: FILE_MODE,
+        contents: new Uint8Array(bytes)
+      }, path);
+    }
 
     transaction.oncomplete = () => resolve();
     transaction.onerror = () => reject(transaction.error);
