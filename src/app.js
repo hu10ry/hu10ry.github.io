@@ -14,8 +14,10 @@ function log(message) {
 
 function updateControls() {
   const ready = Boolean(directoryHandle);
-  $("#export-all").disabled = !ready || adapters.length === 0;
-  $("#import-all").disabled = !ready || adapters.length === 0;
+  const exportButton = $("#export-all");
+  const importButton = $("#import-all");
+  if (exportButton) exportButton.disabled = !ready || adapters.length === 0;
+  if (importButton) importButton.disabled = !ready || adapters.length === 0;
   $("#reconnect-directory").disabled = !handleStore.available;
 }
 
@@ -49,7 +51,7 @@ async function loadAdapters() {
   updateControls();
 }
 
-$("#choose-directory").addEventListener("click", async () => {
+$("#choose-directory")?.addEventListener("click", async () => {
   try {
     if (!("showDirectoryPicker" in window)) {
       throw new Error("Directory access is not supported in this browser. Try a recent desktop Chromium browser.");
@@ -79,7 +81,7 @@ $("#reconnect-directory").addEventListener("click", async () => {
   }
 });
 
-$("#export-all").addEventListener("click", async () => {
+$("#export-all")?.addEventListener("click", async () => {
   try {
     if (!(await requestPermission(directoryHandle))) throw new Error("Read/write permission denied.");
     const result = await sync.exportAll(directoryHandle, adapters, log);
@@ -89,7 +91,7 @@ $("#export-all").addEventListener("click", async () => {
   }
 });
 
-$("#import-all").addEventListener("click", async () => {
+$("#import-all")?.addEventListener("click", async () => {
   if (!window.confirm("Restore saves from this directory? This may overwrite game progress. Back up first and close game tabs before restoring.")) return;
   try {
     if (!(await requestPermission(directoryHandle))) throw new Error("Read/write permission denied.");
@@ -110,23 +112,40 @@ async function loadGames() {
     if (!Array.isArray(games)) throw new Error("games.json must contain an array.");
 
     for (const game of games) {
-      if (!game || typeof game.name !== "string" || typeof game.url !== "string") {
-        throw new Error("Each game needs string name and url values.");
+      if (!game || typeof game.name !== "string" || typeof game.url !== "string" ||
+          (game.image_url !== undefined && typeof game.image_url !== "string") ||
+          (game.interpolate !== undefined && typeof game.interpolate !== "boolean")) {
+        throw new Error("Each game needs string name and url values; image_url must be a string and interpolate a boolean when provided.");
       }
 
-      const item = document.createElement("li");
+      const column = document.createElement("div");
+      column.className = "column";
       const link = document.createElement("a");
+      link.className = "game-card";
       link.href = game.url;
-      link.textContent = game.name;
-      item.append(link);
+      link.setAttribute("aria-label", game.name);
+
+      if (game.image_url) {
+        const image = document.createElement("img");
+        image.src = game.image_url;
+        image.alt = game.name;
+        image.loading = "lazy";
+        image.classList.toggle("no-interpolation", game.interpolate === false);
+        link.append(image);
+      }
+
+      const name = document.createElement("h2");
+      name.textContent = game.name;
+      link.append(name);
+      column.append(link);
 
       if (typeof game.note === "string" && game.note) {
         const note = document.createElement("span");
         note.className = "game-note";
         note.textContent = game.note;
-        item.append(note);
+        column.append(note);
       }
-      gameList.append(item);
+      gameList.append(column);
     }
     $("#game-count").textContent = `${games.length} entr${games.length === 1 ? "y" : "ies"}`;
   } catch (error) {

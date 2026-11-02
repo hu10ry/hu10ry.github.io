@@ -102,30 +102,42 @@ h2 {
   color: var(--muted);
   font-size: 0.8rem;
 }
-.game-list {
-  list-style: none;
-  padding: 0;
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 18px;
   margin: 18px 0 0;
-  border-top: 1px solid var(--line);
 }
-.game-list li {
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  border-bottom: 1px solid var(--line);
-  padding: 11px 2px;
+.column {
+  min-width: 0;
 }
-.game-list a {
-  font-size: 0.94rem;
+.game-card {
+  display: block;
   text-decoration: none;
+}
+.game-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  image-rendering: auto;
+  border-radius: 6px;
+  background: var(--surface);
+}
+.game-card img.no-interpolation {
+  image-rendering: pixelated;
+}
+.game-card h2 {
+  margin-top: 9px;
+  font-size: 0.94rem;
   text-underline-offset: 4px;
 }
-.game-list a:hover {
+.game-card:hover h2 {
   text-decoration: underline;
 }
 .game-note {
+  display: block;
+  margin-top: 5px;
   color: var(--muted);
   font-size: 0.78rem;
 }

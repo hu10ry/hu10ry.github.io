@@ -1,22 +1,37 @@
 [
   {
     "name": "Angry Birds 2",
-    "url": "./angrybirds2/",
-    "note": "Ported by Reeyuki"
+    "url": "./games/angrybirds2/",
+    "note": "Ported by Reeyuki",
+    "image_url": "./icons/angrybirds2.png",
+    "interpolate": true
   },
   {
     "name": "Celeste",
-    "url": "./celeste/",
-    "note": "Ported by Mercury Workshop. Alternate url at celeste-2"
+    "url": "./games/celeste/",
+    "note": "Ported by Mercury Workshop. Alternate url at celeste-2",
+    "image_url": "./icons/celeste.png",
+    "interpolate": false
   },
   {
-    "name": "Animal Crossing (Dobutsu no Mori+)",
-    "url": "./ac-gamecube/",
-    "note": "Ported by genizy (?)"
+    "name": "Animal Crossing (Dobutsu no Mori e+)",
+    "url": "./games/ac-gamecube/",
+    "note": "Ported by genizy (?)",
+    "image_url": "./icons/ac-gamecube.png",
+    "interpolate": true
   },
   {
     "name": "Nazi Zombies Portable",
-    "url": "./nzp/",
-    "note": "Created by the amazing NZP team"
+    "url": "./games/nzp/",
+    "note": "Created by the amazing NZP team",
+    "image_url": "./icons/nzp.png",
+    "interpolate": true
+  },
+  {
+    "name": "Satoru Gojo Backshot Simulator",
+    "url": "./games/gojobackshotsimulator/",
+    "note": "Made by niblet on itch.io",
+    "image_url": "./icons/gojobackshotsimulator.png",
+    "interpolate": true
   }
 ]

@@ -10,11 +10,15 @@
 <body>
   <header class="topbar">
   </header>
-
   <main class="content">
     <section class="status-row" aria-live="polite">
+      <p> | </p>
       <span id="directory-status">No save directory selected</span>
+      <p> | </p>
       <button id="reconnect-directory" class="text-button" disabled>Reconnect</button>
+      <p> | </p>
+      <span id="adapter-count">Loading adapters…</span>
+      <p> | </p>
     </section>
 
     <section class="game-section">
@@ -22,17 +26,10 @@
         <h1>Games</h1>
         <span id="game-count" class="muted"></span>
       </div>
-      <ul id="game-list" class="game-list"></ul>
-    <br>
-    <nav class="actions" aria-label="Save management">
-      <button id="choose-directory">Choose directory</button>
-      <button id="export-all" disabled>Export saves</button>
-      <button id="import-all" disabled>Restore saves</button>
-    </nav>
+      <div id="game-list" class="row game-grid"></div>
     </section>
 
     <footer>
-      <span id="adapter-count">Loading adapters…</span>
     </footer>
   </main>
 
