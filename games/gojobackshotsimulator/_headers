@@ -1,15 +1,15 @@
-/games/gojobackshotsimulator/Build/*.framework.js.br
+/Build/*.framework.js.br
   Content-Type: application/javascript
   Content-Encoding: br
 
-/games/gojobackshotsimulator/Build/*.wasm.br
+//Build/*.wasm.br
   Content-Type: application/wasm
   Content-Encoding: br
 
-/games/gojobackshotsimulator/Build/*.data.br
+//Build/*.data.br
   Content-Type: application/octet-stream
   Content-Encoding: br
 
-/games/gojobackshotsimulator/Build/*.js.br
+//Build/*.js.br
   Content-Type: application/javascript
   Content-Encoding: br
