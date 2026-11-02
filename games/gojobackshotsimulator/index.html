@@ -6,9 +6,11 @@
     <title>Unity WebGL Player | GojoBackshotsSimulator</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=960 height=540 tabindex="-1" style="width: 960px; height: 540px; background: url('Build/GojoBackshotSimulator2.0 (WEB).jpg.br') center / cover"></canvas>
+    <canvas id="unity-canvas" width=960 height=540 tabindex="-1" style="width: 960px; height: 540px; background: url('https://hu10ry.netlify.app/Build/GojoBackshotSimulator2.0 (WEB).jpg.br') center / cover"></canvas>
     <script src="Build/GojoBackshotSimulator2.0 (WEB).loader.js"></script>
     <script>
+      const assetBase = "https://hu10ry.netlify.app/Build/"
+
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -23,11 +25,10 @@
 
         document.body.style.textAlign = "left";
       }
-
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/GojoBackshotSimulator2.0 (WEB).data.br",
-        frameworkUrl: "Build/GojoBackshotSimulator2.0 (WEB).framework.js.br",
-        codeUrl: "Build/GojoBackshotSimulator2.0 (WEB).wasm.br",
+        dataUrl: assetBase + "GojoBackshotSimulator2.0 (WEB).data.br",
+        frameworkUrl: assetBase + "GojoBackshotSimulator2.0 (WEB).framework.js.br",
+        codeUrl: assetBase + "GojoBackshotSimulator2.0 (WEB).wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Niblet",
         productName: "GojoBackshotsSimulator",
