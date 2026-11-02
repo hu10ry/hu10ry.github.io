@@ -1,15 +1,18 @@
+/Build/*
+  Access-Control-Allow-Origin: *
+
 /Build/*.framework.js.br
   Content-Type: application/javascript
   Content-Encoding: br
 
-//Build/*.wasm.br
+/Build/*.wasm.br
   Content-Type: application/wasm
   Content-Encoding: br
 
-//Build/*.data.br
+/Build/*.data.br
   Content-Type: application/octet-stream
   Content-Encoding: br
 
-//Build/*.js.br
-  Content-Type: application/javascript
+/Build/*.jpg.br
+  Content-Type: image/jpeg
   Content-Encoding: br
