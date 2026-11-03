@@ -105,11 +105,11 @@ $("#import-all")?.addEventListener("click", async () => {
 async function loadGames() {
   const gameList = $("#game-list");
   try {
-    const response = await fetch(new URL("../games.json", import.meta.url));
-    if (!response.ok) throw new Error(`Could not load games.json: ${response.status}`);
+    const response = await fetch(new URL("../items.json", import.meta.url));
+    if (!response.ok) throw new Error(`Could not load items.json: ${response.status}`);
 
     const games = await response.json();
-    if (!Array.isArray(games)) throw new Error("games.json must contain an array.");
+    if (!Array.isArray(games)) throw new Error("items.json must contain an array.");
 
     for (const game of games) {
       if (!game || typeof game.name !== "string" || typeof game.url !== "string" ||

@@ -33,5 +33,12 @@
     "note": "Made by niblet on itch.io",
     "image_url": "./icons/gojobackshotsimulator.png",
     "interpolate": true
+  },
+  {
+    "name": "copy.sh/v86",
+    "url": "./tools/v86/",
+    "note": "Run operating systems in your browser. Made by copy @ github.com/copy",
+    "image_url": "./icons/copy.png",
+    "interpolate": false
   }
 ]
