@@ -10,3 +10,6 @@
 [submodule "celeste"]
 	path = games/celeste
 	url = https://github.com/hu10ry/celeste-wasm.git
+[submodule "v86"]
+	path = src/v86
+	url = https://github.com/copy/v86.git
