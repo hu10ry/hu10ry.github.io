@@ -4,3 +4,6 @@
 [submodule "games/celeste"]
 	path = games/celeste
 	url = https://github.com/hu10ry/celeste-wasm.git
+[submodule "games/angrybirds2"]
+	path = games/angrybirds2
+	url = https://github.com/hu10ry/AngryBirds2.git
