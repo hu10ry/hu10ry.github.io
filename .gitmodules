@@ -1,10 +1,10 @@
 [submodule "games/nzp"]
-	path = games/nzp
+	path = nzp
 	url = https://github.com/nzp-team/nzp-team.github.io
-[submodule "games/ac-gamecube"]
+[submodule "ac-gamecube"]
 	path = games/ac-gamecube
 	url = https://github.com/hu10ry/ac-gamecube.git
-[submodule "games/angrybirds2"]
+[submodule "angrybirds2"]
 	path = games/angrybirds2
 	url = https://github.com/hu10ry/AngryBirds2.git
 [submodule "celeste"]
