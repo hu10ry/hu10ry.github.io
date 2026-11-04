@@ -1,5 +1,14 @@
 <!doctype html>
 <title>Archlinux</title>
+<!-- Fixing cursor for font size -->
+<style>
+  #screen_container .cursor {
+    width: 14px !important;
+    height: 3px !important;
+    margin-top: 26px !important;
+    top: auto !important;
+  }
+</style>
 
 <script src="../build/libv86.js"></script>
 <script>
@@ -7,8 +16,6 @@
 
   window.onload = function () {
     var emulator = new V86({
- 
-
       wasm_path: "../build/v86.wasm",
       memory_size: 512 * 1024 * 1024,
       vga_memory_size: 8 * 1024 * 1024,
@@ -21,23 +28,70 @@
       vga_bios: {
         url: "../bios/vgabios.bin",
       },
-      
+
       hda: {
-        url: "./MSDOS.6.22.img",
+        url: "https://hucdnry.netlify.app/images/MSDOS.6.22.img",
 
         // set to true if you want to load it asynchrously during runtime (for this option we need to run a webserver that supports the Range header)
         // NOTE: async: false is slow but proved to be more realiable
-        async: false,
-
-        // This needs to be the size of the raw disk.
-        size: 1.5 * 1024 * 1024 * 1024,
-        // See the `disk_size` item in the packer template.
+        async: true,
       },
 
       acpi: false,
       autostart: true,
     });
 
+    let floppy1Mounted = false;
+    let floppy2Mounted = false;
+
+    // FLOPPY A
+    document.getElementById("floppy1_btn").onclick = async function () {
+      if (floppy1Mounted) {
+        emulator.eject_fda();
+        floppy1Mounted = false;
+        this.textContent = "Mount Floppy";
+      } else {
+        document.getElementById("floppy1_input").click();
+      }
+    };
+
+    document.getElementById("floppy1_input").onchange = async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      await emulator.set_fda({
+        buffer: await file.arrayBuffer(),
+      });
+
+      floppy1Mounted = true;
+      document.getElementById("floppy1_btn").textContent = "Dismount Floppy";
+      this.value = "";
+    };
+
+    // FLOPPY B
+    document.getElementById("floppy2_btn").onclick = async function () {
+      if (floppy2Mounted) {
+        emulator.eject_fdb();
+        floppy2Mounted = false;
+        this.textContent = "Mount Second Floppy";
+      } else {
+        document.getElementById("floppy2_input").click();
+      }
+    };
+
+    document.getElementById("floppy2_input").onchange = async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      await emulator.set_fdb({
+        buffer: await file.arrayBuffer(),
+      });
+
+      floppy2Mounted = true;
+      document.getElementById("floppy2_btn").textContent =
+        "Dismount Second Floppy";
+      this.value = "";
+    };
 
     document.getElementById("save_file").onclick = async function () {
       const new_state = await emulator.save_state();
@@ -72,26 +126,32 @@
   };
 </script>
 
-<input id="save_file" type="button" value="Save state to file" />
-Restore from file: <input id="restore_file" type="file" />
-<hr />
 <button id="fullscreen_btn">Fullscreen</button>
+
+<button id="floppy1_btn">Mount Floppy</button>
+<button id="floppy2_btn">Mount Second Floppy</button>
+<input type="file" id="floppy1_input" accept=".img,.ima,.flp" hidden />
+<input type="file" id="floppy2_input" accept=".img,.ima,.flp" hidden />
+
+<input id="save_file" type="button" value="Save state to file" />
+<input id="restore_file" type="file" />
+
+<hr />
 
 <!-- A minimal structure for the ScreenAdapter defined in browser/screen.js -->
 <div id="screen_container">
-  <div style="white-space: pre; font: 32px monospace; line-height: 36px"></div>
+  <div style="white-space: pre; font: 28px monospace; line-height: 30px"></div>
   <canvas style="display: none"></canvas>
 </div>
 
-
 <script>
-    document.getElementById("fullscreen_btn").addEventListener("click", () => {
+  document.getElementById("fullscreen_btn").addEventListener("click", () => {
     const screen = document.getElementById("screen_container");
 
     if (!document.fullscreenElement) {
-        screen.requestFullscreen();
+      screen.requestFullscreen();
     } else {
-        document.exitFullscreen();
+      document.exitFullscreen();
     }
-});
+  });
 </script>
