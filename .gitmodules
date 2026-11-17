@@ -7,3 +7,6 @@
 [submodule "games/angrybirds2"]
 	path = games/angrybirds2
 	url = https://github.com/hu10ry/AngryBirds2.git
+[submodule "games/nzp"]
+	path = games/nzp
+	url = https://github.com/nzp-team/nzp-team.github.io.git
